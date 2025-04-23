@@ -13,15 +13,14 @@ import (
 
 var DB *gorm.DB
 
-
 func Init() {
 	connStr := fmt.Sprintf(
 		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		getEnv("DB_HOST", "localhost"),
-		getEnv("DB_PORT", "5432"),
-		getEnv("DB_USER", "postgres"),
-		getEnv("DB_PASSWORD", "password"),
-		getEnv("DB_NAME", "todo_app"),
+		getEnv("DB_HOST", "${DB_HOST}"),
+		getEnv("DB_PORT", "${DB_PORT}"),
+		getEnv("DB_USER", "${DB_USER}"),
+		getEnv("DB_PASSWORD", "${DB_PASSWORD"),
+		getEnv("DB_NAME", "${DB_NAME}"),
 	)
 
 	var err error
@@ -29,7 +28,6 @@ func Init() {
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
 	}
-
 
 	DB.AutoMigrate(&models.Todo{})
 	fmt.Println("✅ Connected to PostgreSQL!")
