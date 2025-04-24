@@ -2,41 +2,72 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/supakorn5039-boon/todo-backend/models"
-	"github.com/supakorn5039-boon/todo-backend/services"
 )
 
+type TodoService interface {
+	GetAllTodos() ([]models.Todo, error)
+	CreateTodo(todo *models.Todo) error
+	UpdateTodo(todo *models.Todo) error
+	DeleteTodo(id uint) error
+}
+
 type TodoController struct {
-	service *services.TodoService
+	Service TodoService
 }
 
-func NewTodoController(services *services.TodoService) *TodoController {
-	return &TodoController{services}
+func NewTodoController(service TodoService) *TodoController {
+	return &TodoController{service}
 }
 
-func (c *TodoController) GetTodos(ctx *gin.Context) {
-	todos, err := c.service.GetAllTodos()
+func (controller *TodoController) GetTodos(c *gin.Context) {
+	todos, err := controller.Service.GetAllTodos()
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to fetch todos"})
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Error fetching todos"})
 		return
 	}
-	ctx.JSON(http.StatusOK, todos)
+	c.JSON(http.StatusOK, todos)
 }
 
-func (c *TodoController) CreateTodo(ctx *gin.Context) {
+func (controller *TodoController) CreateTodo(c *gin.Context) {
 	var todo models.Todo
-
-	if err := ctx.ShouldBindJSON(&todo); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON input"})
+	if err := c.ShouldBindJSON(&todo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid data"})
 		return
 	}
-
-	if err := c.service.CreateTodo(&todo); err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to create todo"})
+	if err := controller.Service.CreateTodo(&todo); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error creating todo"})
 		return
 	}
+	c.JSON(http.StatusCreated, todo)
+}
 
-	ctx.JSON(http.StatusCreated, todo)
+func (controller *TodoController) UpdateTodo(c *gin.Context) {
+	var todo models.Todo
+	if err := c.ShouldBindJSON(&todo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid data"})
+		return
+	}
+	if err := controller.Service.UpdateTodo(&todo); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error updating todo"})
+		return
+	}
+	c.JSON(http.StatusOK, todo)
+}
+
+func (controller *TodoController) DeleteTodo(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invalid ID"})
+		return
+	}
+	if err := controller.Service.DeleteTodo(uint(id)); err != nil {
+		c.JSON(500, gin.H{"message": "Error deleting todo"})
+		return
+	}
+	c.JSON(200, gin.H{"message": "Todo deleted"})
 }
