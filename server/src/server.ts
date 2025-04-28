@@ -17,7 +17,7 @@ app.use(morgan("dev"));
 const routesPath = path.join(__dirname, "routes");
 fs.readdirSync(routesPath).forEach((file) => {
   const route = require(path.join(routesPath, file));
-  const routeName = "/" + path.parse(file).name;
+  const routeName = "/api/" + path.parse(file).name;
   if (route.default) {
     app.use(routeName, route.default);
   }
