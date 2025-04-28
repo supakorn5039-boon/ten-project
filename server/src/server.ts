@@ -1,21 +1,28 @@
 import express, { type Application } from "express";
-import path from "path";
-import fs from "fs"
+import dotenv from "dotenv";
+import cors from "cors";
 import morgan from "morgan";
+import path from "path";
+import fs from "fs";
 
-const app:Application = express()
-const PORT = process.env.PORT || 8080
+dotenv.config();
 
-app.use(express.json())
-app.use(morgan("dev"))
+const app: Application = express();
+const PORT = process.env.PORT || 8080;
 
-const routesPath  = path.join(__dirname , "routes")
+app.use(express.json());
+app.use(cors());
+app.use(morgan("dev"));
+
+const routesPath = path.join(__dirname, "routes");
 fs.readdirSync(routesPath).forEach((file) => {
-    const route  = require(path.join(routesPath,file))
-    const routeName = "/" + path.parse(file).name
-    route.default && app.use(routeName , route.default)
-})
+  const route = require(path.join(routesPath, file));
+  const routeName = "/" + path.parse(file).name;
+  if (route.default) {
+    app.use(routeName, route.default);
+  }
+});
 
-app.listen(PORT , () => {
-    console.log(`server is running on PORT ${PORT}`);
-})
+app.listen(PORT, () => {
+  console.log(`server is running on PORT ${PORT}`);
+});
