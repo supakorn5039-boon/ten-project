@@ -7,7 +7,7 @@ router.get(
   "/admin",
   authorizeRole(["admin"]),
   (_req: Request, res: Response) => {
-    res.send("This is admin-only data.");
+    res.json({ message: "Admin data" });
   },
 );
 
