@@ -16,12 +16,12 @@ export const loginController = async (req: Request, res: Response) => {
   });
 
   if (!user) {
-    return res.status(401).send("User not found");
+    return res.status(401).json({ message: "User not found" });
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    return res.status(401).send("Invalid Password");
+    return res.status(401).json({ message: "Invalid Password" });
   }
 
   const token = jwt.sign(

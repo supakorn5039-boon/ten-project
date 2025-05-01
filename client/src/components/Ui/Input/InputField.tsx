@@ -30,7 +30,7 @@ export default function InputField({
           className={`
           flex items-center rounded-lg border px-4 py-2
           ${error ? 'border-red-500' : 'border-gray-300'}
-          focus-within:ring-2 focus-within:ring-green-500
+          
         `}
         >
           {icon && <div className="text-gray-400 mr-2">{icon}</div>}

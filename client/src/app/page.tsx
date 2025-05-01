@@ -1,14 +1,20 @@
+'use client';
+
+import useProtectRoute from '@/hooks/useProtectRoute';
+
 export default function Home() {
+  const { isChecking } = useProtectRoute();
+
+  if (isChecking) return null;
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <header className="mb-8">
           <h1 className="text-4xl font-bold text-gray-800">📊 Dashboard</h1>
           <p className="text-gray-500 mt-2">Welcome back! &apos;s an overview of your data.</p>
         </header>
 
-        {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="bg-white p-6 rounded-2xl shadow hover:shadow-md transition">
             <h2 className="text-lg font-semibold text-gray-700">Total Tasks</h2>
@@ -24,7 +30,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Footer */}
         <footer className="mt-12 text-center text-gray-400 text-sm">
           &copy; {new Date().getFullYear()} Your Dashboard Project
         </footer>

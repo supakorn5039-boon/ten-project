@@ -1,5 +1,5 @@
 import { CredentialDefaultValue, CredentialResolver } from '@/app/dto/Credential.DTO';
-import type { CredentialProps } from '@/app/types/Credentials';
+import type { CredentialProps } from '@/types/Credentials';
 import { ApiRoutes } from '@/constant/ApiRoutes';
 import axiosInstance from '@/utils/axios';
 import { useForm } from 'react-hook-form';
@@ -9,6 +9,11 @@ export const CredentialService = {
 
   LoginCredential: async (data: CredentialProps): Promise<CredentialProps> => {
     const res = await axiosInstance.post(`${ApiRoutes.LOGiN}`, data);
+    return res.data;
+  },
+
+  RegisterCredential: async (data: CredentialProps): Promise<CredentialProps> => {
+    const res = await axiosInstance.post(`${ApiRoutes.REGISTER}`, data);
     return res.data;
   },
 

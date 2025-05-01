@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { AxiosError } from 'axios';
 import LoginForm from './LoginForm';
 import { CredentialService } from '@/service/Credential.service';
-import { CredentialProps } from '@/app/types/Credentials';
+import { CredentialProps } from '@/types/Credentials';
 import Cookies from 'js-cookie';
-import { ToastAlert } from '../Ui/Toast/Toast';
+import { ToastAlert } from '../../Ui/Toast/Toast';
 
 export default function LoginIndex() {
   const router = useRouter();
@@ -18,14 +19,15 @@ export default function LoginIndex() {
     onSuccess: (data) => {
       const { token } = data;
 
-      Cookies.set('token', token!, { expires: 2 });
+      Cookies.set('token', token!, { expires: 1 });
 
       queryClient.invalidateQueries({ queryKey: [CredentialService.QUERY_KEY] });
       router.push('/');
       ToastAlert('success', 'Login Success!');
     },
-    onError: () => {
-      ToastAlert('error', 'Login Failed!');
+    onError: (error: AxiosError<{ message: string }>) => {
+      const msg = error.response?.data.message ?? 'Login Fail!!';
+      ToastAlert('error', msg);
     },
   });
 
@@ -33,5 +35,5 @@ export default function LoginIndex() {
     LoginMutation.mutate(data);
   };
 
-  return <LoginForm formMethods={formMethods} onSubmit={handleSubmit} />;
+  return <LoginForm loading={LoginMutation.isPending} formMethods={formMethods} onSubmit={handleSubmit} />;
 }
