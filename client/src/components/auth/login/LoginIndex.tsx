@@ -17,9 +17,11 @@ export default function LoginIndex() {
   const LoginMutation = useMutation({
     mutationFn: CredentialService.LoginCredential,
     onSuccess: (data) => {
-      const { token } = data;
+      const { token, role } = data;
 
       Cookies.set('token', token!, { expires: 1 });
+
+      Cookies.set('role', role!, { expires: 1 });
 
       queryClient.invalidateQueries({ queryKey: [CredentialService.QUERY_KEY] });
       router.push('/');

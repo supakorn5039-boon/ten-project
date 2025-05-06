@@ -30,7 +30,7 @@ export const loginController = async (req: Request, res: Response) => {
     { expiresIn: "1h" },
   );
 
-  return res.json({ token });
+  return res.json({ token, role: user.role });
 };
 
 export const registerController = async (req: Request, res: Response) => {
