@@ -8,7 +8,7 @@
     "start": "next start",
     "test": "echo \"no tests yet\" && exit 0",
     "lint": "next lint",
-    "prepare": "husky install",
+    "prepare": "husky",
     "postinstall": "husky install"
   },
   "dependencies": {
