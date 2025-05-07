@@ -1,29 +1,34 @@
 package com.example.financetracker.controller;
 
 import com.example.financetracker.entity.Expense;
+import com.example.financetracker.exception.ResourceNotFoundException;
 import com.example.financetracker.reposity.ExpenseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/expenses")
 @CrossOrigin(origins = "*")
 public class ExpenseController {
 
-    @Autowired
-    public ExpenseRepository expenseRepository;
+    public final ExpenseRepository expenseRepository;
+
+    public ExpenseController(ExpenseRepository expenseRepository) {
+        this.expenseRepository = expenseRepository;
+    }
 
     @GetMapping
     public List<Expense> getAllExpense() {
-        return expenseRepository.findAll();
+        return expenseRepository
+                .findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     @GetMapping("/{id}")
-    public Optional<Expense> getExpenseById(@PathVariable Long id) {
-        return expenseRepository.findById(id);
+    public Expense getExpenseById(@PathVariable Long id) {
+        return expenseRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Expense not found with id: " + id));
     }
 
     @PostMapping
@@ -45,7 +50,4 @@ public class ExpenseController {
     public void deleteExpense(@PathVariable Long id) {
         expenseRepository.deleteById(id);
     }
-
-
-
 }
