@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    html {
+        @apply scroll-smooth;
+    }
+
+    body {
+        @apply bg-[#fafafa] font-nunito;
+    }
+
+    /* Sidebar */
+    .sidebar:hover .nav-item > a {
+        @apply w-auto;
+    }
+
+    .sidebar .nav-item > button,
+    .sidebar .nav-item > a {
+        @apply mb-1 flex w-full items-center justify-between overflow-hidden whitespace-nowrap rounded-md p-2.5 text-[#506690] hover:bg-green-sub;
+    }
+    .sidebar .nav-item > button.active,
+    .sidebar .nav-item > a.active {
+        @apply bg-[#000]/[0.08] text-black;
+    }
+
+    .sidebar .nav-item > button.active > div > span,
+    .sidebar ul.sub-menu li button,
+    .sidebar ul.sub-menu li a {
+        @apply flex w-full items-center px-9 py-2.5 before:h-0.5 before:w-2 before:rounded before:bg-gray-300 hover:bg-gray-100
+            ltr:before:mr-2 rtl:before:ml-2;
+    }
+    .sidebar ul.sub-menu li button.active,
+    .sidebar .nav-item a div:first-child svg,
+    .sidebar .nav-item button div:first-child svg {
+        @apply h-5 w-5 text-black/50;
+    }
+
+    .main-container .main-content {
+        @apply transition-all duration-300 lg:ltr:ml-[260px] lg:rtl:mr-[260px];
+    }
+
+    .gradient-color {
+        @apply bg-gradient-to-r from-blue-500 via-indigo-500 to-green-500
+         bg-[length:200%_200%] bg-left bg-clip-text text-transparent
+         animate-gradient;
+    }
+}
