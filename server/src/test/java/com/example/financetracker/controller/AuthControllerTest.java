@@ -1,6 +1,7 @@
 package com.example.financetracker.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,7 @@ public class AuthControllerTest {
 
         assertEquals(200, response.getStatusCodeValue());
         RegisterResponse body = (RegisterResponse) response.getBody();
+        assertNotNull(body);
         assertEquals("testUser", body.getUsername());
         assertEquals("mock-jwt-token", body.getToken());
     }
@@ -82,6 +84,7 @@ public class AuthControllerTest {
 
         assertEquals(200, response.getStatusCodeValue());
         LoginResponse body = (LoginResponse) response.getBody();
+        assertNotNull(body);
         assertEquals("testUser", body.getUsername());
         assertEquals("mock-jwt-token", body.getToken());
     }

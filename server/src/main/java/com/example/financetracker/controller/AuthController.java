@@ -3,6 +3,7 @@ package com.example.financetracker.controller;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.financetracker.dto.LoginRequest;
 import com.example.financetracker.dto.LoginResponse;
 import com.example.financetracker.dto.RegisterRequest;
-import com.example.financetracker.dto.RegisterResponse;
 import com.example.financetracker.entity.User;
 import com.example.financetracker.security.UserService;
 import com.example.financetracker.util.JwtUtil;
@@ -34,14 +34,13 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request) {
         try {
-            User registeredUser = userService.registerUser(request.getEmail(),
-                    request.getUsername(), request.getPassword());
+            userService.registerUser(request.getEmail(), request.getUsername(),
+                    request.getPassword());
 
-            String token = jwtUtil.generateToken(registeredUser.getUsername());
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Register success");
 
-            RegisterResponse response = new RegisterResponse(registeredUser.getUsername(), token);
-
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
         } catch (RuntimeException e) {
             Map<String, String> errors = new HashMap<>();
