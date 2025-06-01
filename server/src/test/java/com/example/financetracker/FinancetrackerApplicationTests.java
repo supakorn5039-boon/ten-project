@@ -8,6 +8,7 @@ class FinancetrackerApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
