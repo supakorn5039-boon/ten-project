@@ -2,7 +2,9 @@ package com.example.financetracker.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import com.example.financetracker.dto.LoginRequest;
 import com.example.financetracker.dto.LoginResponse;
 import com.example.financetracker.dto.RegisterRequest;
-import com.example.financetracker.dto.RegisterResponse;
 import com.example.financetracker.entity.User;
 import com.example.financetracker.security.UserService;
 import com.example.financetracker.util.JwtUtil;
@@ -35,23 +36,25 @@ public class AuthControllerTest {
 
     @Test
     void testRegisterUserSuccess() {
-
         RegisterRequest request = new RegisterRequest("test@example.com", "testUser", "password");
         User mockUser = new User();
         mockUser.setUsername("testUser");
 
         when(userService.registerUser(request.getEmail(), request.getUsername(),
                 request.getPassword())).thenReturn(mockUser);
-        when(jwtUtil.generateToken("testUser")).thenReturn("mock-jwt-token");
 
         ResponseEntity<?> response = authController.registerUser(request);
 
-        assertEquals(200, response.getStatusCodeValue());
-        RegisterResponse body = (RegisterResponse) response.getBody();
+        assertEquals(201, response.getStatusCodeValue());
+
+        @SuppressWarnings("unchecked")
+        Map<String, String> body = (Map<String, String>) response.getBody();
+
         assertNotNull(body);
-        assertEquals("testUser", body.getUsername());
-        assertEquals("mock-jwt-token", body.getToken());
+        assertTrue(body.containsKey("message"));
+        assertEquals("Register success", body.get("message"));
     }
+
 
     @Test
     void testRegisterUserFailure() {
