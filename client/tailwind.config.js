@@ -29,6 +29,7 @@ module.exports = {
                     DEFAULT: '#ffffff',
                 },
                 'green-sub': '#299d91',
+                'gray-light': '#9f9f9f',
             },
             fontFamily: {
                 nunito: ['var(--font-nunito)'],

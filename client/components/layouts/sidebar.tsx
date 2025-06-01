@@ -26,8 +26,8 @@ const Sidebar = () => {
                 </Link>
             </div>
 
-            <div className="flex-1 overflow-hidden">
-                <PerfectScrollbar className="h-full px-4 py-2">
+            <div className="flex-1 flex flex-col overflow-hidden">
+                <PerfectScrollbar className="flex-1 px-4 py-2">
                     <nav className="space-y-3">
                         {navItems.map(({ href, label, icon: Icon }) => (
                             <Link
@@ -42,16 +42,17 @@ const Sidebar = () => {
                             </Link>
                         ))}
                     </nav>
-                    <div className="flex-1 px-3">
-                        <button
-                            onClick={logoutHandler}
-                            className="hover:bg-gray-800 flex items-center gap-2 text-white hover:text-red-500 transition duration-200"
-                        >
-                            <FiLogOut />
-                            <span>Logout</span>
-                        </button>
-                    </div>
                 </PerfectScrollbar>
+
+                <div className="p-4">
+                    <button
+                        onClick={logoutHandler}
+                        className="group flex items-center gap-2 rounded p-3 font-medium transition-all duration-200 text-white hover:bg-gray-800 w-full"
+                    >
+                        <FiLogOut size={20} />
+                        <span>Logout</span>
+                    </button>
+                </div>
             </div>
         </aside>
     );
