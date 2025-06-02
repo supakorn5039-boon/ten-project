@@ -1,12 +1,12 @@
 'use client';
 
 import { useFormatDate } from '@/hooks/useFormatDate';
-import { useAuthStore } from '@/store/useAuthStore';
+import { selectUsername, useAuthStore } from '@/store/useAuthStore';
 import { COLORS } from '@/theme/COLORS';
 import { RiArrowRightDoubleLine } from 'react-icons/ri';
 
 export default function Header() {
-    const { username } = useAuthStore();
+    const username = useAuthStore(selectUsername);
     const formatDate = useFormatDate();
 
     return (

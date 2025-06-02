@@ -8,7 +8,7 @@ import { PathRoutes } from '@/constants/PathRoutes';
 import type { BaseCredentialProps } from '@/dto/Credential.DTO';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { AuthService } from '@/services/Auth.Service';
-import { useAuthStore } from '@/store/useAuthStore';
+import { selectSetUsername, useAuthStore } from '@/store/useAuthStore';
 import type { CredentialResponseProps } from '@/types/credential';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation';
 export default function LoginIndex(): React.ReactElement {
     const formMethods = AuthService.useLoginForm;
     const querClint = useQueryClient();
-    const { setUsername } = useAuthStore();
+    const setUsername = useAuthStore(selectSetUsername);
 
     const router = useRouter();
 

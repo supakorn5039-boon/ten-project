@@ -1,6 +1,7 @@
 'use client';
 
 import { navItems } from '@/constants/NavConst';
+import { selectClearAuth, useAuthStore } from '@/store/useAuthStore';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -11,10 +12,13 @@ const Sidebar = () => {
     const currentPath = usePathname();
     const router = useRouter();
 
+    const clearAuth = useAuthStore(selectClearAuth);
+
     const checkActiveRoute = (route: string) => currentPath === route;
 
     const logoutHandler = () => {
         Cookies.remove('token');
+        clearAuth();
         router.push('/login');
     };
 
