@@ -6,7 +6,7 @@ interface InputFieldProps<T extends Record<string, any>> {
     type: string;
     name: Path<T>;
     placeholder?: string;
-    error?: FieldError | undefined;
+    error?: FieldError;
     icon?: React.ReactNode;
     register: UseFormRegister<T>;
     defaultValue?: string | Date;

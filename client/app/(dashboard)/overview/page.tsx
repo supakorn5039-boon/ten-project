@@ -1,5 +1,4 @@
-import OverviewIndex from '@/components/pages/overview/OverviewIndex';
-import React from 'react';
+import OverviewIndex from '@/components/pages/overview/Index';
 
 export default function OverViewPage() {
     return <OverviewIndex />;

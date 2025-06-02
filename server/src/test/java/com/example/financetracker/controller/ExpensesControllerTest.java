@@ -20,7 +20,7 @@ import com.example.financetracker.entity.Expense;
 import com.example.financetracker.exception.ResourceNotFoundException;
 import com.example.financetracker.reposity.ExpenseRepository;
 
-public class ExpensesControllerTest {
+class ExpensesControllerTest {
 
     private ExpenseController expenseController;
     private ExpenseRepository expenseRepository;

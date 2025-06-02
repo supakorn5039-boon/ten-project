@@ -18,7 +18,7 @@ import com.example.financetracker.entity.User;
 import com.example.financetracker.security.UserService;
 import com.example.financetracker.util.JwtUtil;
 
-public class AuthControllerTest {
+class AuthControllerTest {
 
     @Mock
     private UserService userService;
@@ -45,7 +45,7 @@ public class AuthControllerTest {
 
         ResponseEntity<?> response = authController.registerUser(request);
 
-        assertEquals(201, response.getStatusCodeValue());
+        assertEquals(201, response.getStatusCode().value());
 
         @SuppressWarnings("unchecked")
         Map<String, String> body = (Map<String, String>) response.getBody();
@@ -66,7 +66,7 @@ public class AuthControllerTest {
 
         ResponseEntity<?> response = authController.registerUser(request);
 
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class AuthControllerTest {
 
         ResponseEntity<?> response = authController.loginUser(request);
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         LoginResponse body = (LoginResponse) response.getBody();
         assertNotNull(body);
         assertEquals("testUser", body.getUsername());
@@ -104,6 +104,6 @@ public class AuthControllerTest {
 
         ResponseEntity<?> response = authController.loginUser(request);
 
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
     }
 }
