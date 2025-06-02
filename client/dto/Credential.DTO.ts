@@ -13,8 +13,8 @@ export type BaseCredentialProps = yup.InferType<typeof baseCredentialSchema>;
 export type RegisterCredentialProps = yup.InferType<typeof registerSchema>;
 
 export const LoginDefaultValue: BaseCredentialProps = {
-    email: 'test@gmail.com',
-    password: 'test',
+    email: 'email9683@example.com',
+    password: 'pass-9683',
 };
 
 export const RegisterDefaultValue: RegisterCredentialProps = {

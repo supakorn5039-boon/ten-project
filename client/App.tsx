@@ -2,7 +2,7 @@
 
 import { PropsWithChildren } from 'react';
 
-function App({ children }: PropsWithChildren) {
+function App({ children }: Readonly<PropsWithChildren>) {
     return <div className="main-section relative font-nunito text-sm font-normal antialiased">{children}</div>;
 }
 

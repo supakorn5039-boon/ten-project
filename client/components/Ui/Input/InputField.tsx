@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FieldError, UseFormRegister, Path } from 'react-hook-form';
+import type { FieldError, Path, UseFormRegister } from 'react-hook-form';
 
 interface InputFieldProps<T extends Record<string, any>> {
     label: string;
@@ -21,7 +21,7 @@ export default function InputField<T extends Record<string, any>>({
     icon,
     register,
     defaultValue,
-}: InputFieldProps<T>): React.ReactElement {
+}: Readonly<InputFieldProps<T>>): React.ReactElement {
     return (
         <div className="w-full">
             <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">

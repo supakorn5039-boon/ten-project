@@ -30,14 +30,12 @@ export default function LoginIndex(): React.ReactElement {
 
     const LoginMutation = useMutation({
         mutationFn: AuthService.LoginCredential,
-        onSuccess: (data: CredentialResponseProps) => {
-            Cookies.set('token', data.token, { expires: 1 });
-            setUsername(data.username);
+        onSuccess: ({ username, token }: CredentialResponseProps) => {
+            Cookies.set('token', token, { expires: 1 });
+            setUsername(username);
             querClint.invalidateQueries({ queryKey: [AuthService.QUERY_KEY] });
-            router.push(PathRoutes.OVERVIEW);
-        },
-        onSettled: () => {
             ToastAlert('success', 'Login Success!');
+            router.push(PathRoutes.OVERVIEW);
         },
         onError: (error: AxiosError<{ message: string }>) => {
             const msg = error.response?.data.message ?? 'Login Failed!!';

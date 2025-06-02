@@ -1,8 +1,9 @@
 import ProviderComponent from '@/components/layouts/provider-component';
-import 'react-perfect-scrollbar/dist/css/styles.css';
-import '../styles/tailwind.css';
 import { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
+import type { PropsWithChildren } from 'react';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import '../styles/tailwind.css';
 
 export const metadata: Metadata = {
     title: {
@@ -21,7 +22,7 @@ const nunito = Nunito({
     variable: '--font-nunito',
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
     return (
         <html lang="en">
             <body className={nunito.variable}>

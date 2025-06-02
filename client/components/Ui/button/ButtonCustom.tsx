@@ -31,7 +31,7 @@ export default function ButtonCustom({
     isLoading,
     disabled,
     remove,
-}: ButtonCustomProps) {
+}: Readonly<ButtonCustomProps>) {
     const baseClasses = [
         'flex items-center justify-center',
         'min-h-[42px] px-6',
