@@ -14,7 +14,7 @@ import com.example.financetracker.dto.LoginRequest;
 import com.example.financetracker.dto.LoginResponse;
 import com.example.financetracker.dto.RegisterRequest;
 import com.example.financetracker.entity.User;
-import com.example.financetracker.security.UserService;
+import com.example.financetracker.service.UserService;
 import com.example.financetracker.util.JwtUtil;
 
 @RestController

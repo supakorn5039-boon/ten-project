@@ -1,10 +1,10 @@
-package com.example.financetracker.security;
+package com.example.financetracker.service;
 
-import com.example.financetracker.entity.User;
-import com.example.financetracker.reposity.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.example.financetracker.entity.User;
+import com.example.financetracker.reposity.UserRepository;
 
 
 @Service

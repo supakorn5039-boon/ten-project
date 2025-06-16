@@ -1,12 +1,19 @@
 package com.example.financetracker.controller;
 
+import java.util.List;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.example.financetracker.entity.Expense;
 import com.example.financetracker.exception.ResourceNotFoundException;
 import com.example.financetracker.reposity.ExpenseRepository;
-import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/expenses")
@@ -21,14 +28,13 @@ public class ExpenseController {
 
     @GetMapping
     public List<Expense> getAllExpense() {
-        return expenseRepository
-                .findAll(Sort.by(Sort.Direction.ASC, "id"));
+        return expenseRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     @GetMapping("/{id}")
     public Expense getExpenseById(@PathVariable Long id) {
-        return expenseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Expense not found with id: " + id));
+        return expenseRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Expense not found with id: " + id));
     }
 
     @PostMapping
@@ -37,7 +43,7 @@ public class ExpenseController {
     }
 
     @PutMapping("/{id}")
-    public Expense updateExpense(@PathVariable Long id  , @RequestBody Expense updatedExpense) {
+    public Expense updateExpense(@PathVariable Long id, @RequestBody Expense updatedExpense) {
         return expenseRepository.findById(id).map(expense -> {
             expense.setName(updatedExpense.getName());
             expense.setAmount(updatedExpense.getAmount());
